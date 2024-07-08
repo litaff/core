@@ -9,6 +9,9 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
     
     public event Action<T>? OnStateChanged;
 
+    /// <summary>
+    /// Creates a new state machine with the given states.
+    /// </summary>
     public StateMachine(params State<T>[] states)
     {
         States = new Dictionary<T, State<T>>();
@@ -19,11 +22,21 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
         }
     }
 
+    /// <summary>
+    /// Starts the state machine. Switches to the <see cref="initialStateType"/>.
+    /// </summary>
     public void Run(T initialStateType)
     {
         SwitchState(initialStateType);
     }
 
+    /// <summary>
+    /// Switches to the given state type. If the state type is the same as the current state type, nothing happens.
+    /// If the state type does not exist in the state machine, an ArgumentException is thrown.
+    /// Current state's OnExit is called before switching to the new state.
+    /// New state's OnEnter is called after switching to it.
+    /// <see cref="OnStateChanged"/> event is invoked after switching to the new state.
+    /// </summary>
     public void SwitchState(T stateType)
     {
         if (CurrentState != null)
@@ -48,6 +61,10 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
         OnStateChanged?.Invoke(stateType);
     }
 
+    /// <summary>
+    /// Tries to switch to the previous state.
+    /// </summary>
+    /// <returns>True if switch was successful.</returns>
     public bool TrySwitchToPrevious()
     {
         if (PreviousState == null) return false;
@@ -56,6 +73,9 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
         return true;
     }
     
+    /// <summary>
+    /// Clears the states and calls the OnExit of the current state.
+    /// </summary>
     public void Dispose()
     {
         States.Clear();
@@ -63,6 +83,10 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
         CurrentState = null;
     }
 
+    /// <summary>
+    /// Registers the state to the state machine.
+    /// If the state type already exists in the state machine, an ArgumentException is thrown.
+    /// </summary>
     private void RegisterState(State<T> state)
     {
         state.StateMachine = this;
