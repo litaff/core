@@ -2,7 +2,7 @@ namespace StateMachine;
 
 public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
 {
-    private readonly Dictionary<T, State<T>> states;
+    protected readonly Dictionary<T, State<T>> States;
     
     public State<T>? CurrentState { get; protected set; }
     public State<T>? PreviousState { get; protected set; }
@@ -11,7 +11,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
 
     public StateMachine(params State<T>[] states)
     {
-        this.states = new Dictionary<T, State<T>>();
+        States = new Dictionary<T, State<T>>();
         
         foreach (var state in states)
         {
@@ -35,7 +35,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
             CurrentState.OnExit();
         }
         
-        if (!states.TryGetValue(stateType, out var value))
+        if (!States.TryGetValue(stateType, out var value))
         {
             throw new ArgumentException($"State {stateType} does not exist in the state machine");
         }
@@ -58,7 +58,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
     
     public void Dispose()
     {
-        states.Clear();
+        States.Clear();
         CurrentState?.OnExit();
         CurrentState = null;
     }
@@ -66,7 +66,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
     private void RegisterState(State<T> state)
     {
         state.StateMachine = this;
-        if(states.TryAdd(state.StateType, state)) return;
+        if(States.TryAdd(state.StateType, state)) return;
         throw new ArgumentException($"State {state.StateType} already exists in the state machine");
     }
 }
