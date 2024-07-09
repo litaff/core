@@ -22,7 +22,7 @@ public class StateMachineTests
         Assert.That(stateMachine.RegisteredStates, Has.Count.EqualTo(3));
         Assert.Multiple(() =>
         {
-            Assert.That(stateMachine.RegisteredStates.ContainsKey(MockStateType.Initializing), Is.False);
+            Assert.That(stateMachine.RegisteredStates.ContainsKey(MockStateType.Initializing), Is.True);
             Assert.That(stateMachine.RegisteredStates.ContainsKey(MockStateType.Running), Is.True);
             Assert.That(stateMachine.RegisteredStates.ContainsKey(MockStateType.Ending), Is.True);
         });
