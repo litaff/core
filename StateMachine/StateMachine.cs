@@ -1,8 +1,11 @@
 namespace StateMachine;
 
+using Logger;
+
 public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
 {
     protected readonly Dictionary<T, State<T>> States;
+    protected ILogger Logger { get; private set; }
     
     public State<T>? CurrentState { get; protected set; }
     public State<T>? PreviousState { get; protected set; }
@@ -12,9 +15,10 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
     /// <summary>
     /// Creates a new state machine with the given states.
     /// </summary>
-    public StateMachine(params State<T>[] states)
+    public StateMachine(ILogger logger, params State<T>[] states)
     {
         States = new Dictionary<T, State<T>>();
+        Logger = logger;
         
         foreach (var state in states)
         {
@@ -45,6 +49,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
             {
                 return;
             }
+            Logger.Log($"[StateMachine] Exiting state: {CurrentState.StateType}.");
             CurrentState.OnExit();
         }
         
@@ -56,9 +61,11 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
         PreviousState = CurrentState;
         CurrentState = value;
         
+        Logger.Log($"[StateMachine] Entering state: {CurrentState.StateType}.");
         CurrentState.OnEnter();
         
         OnStateChanged?.Invoke(stateType);
+        Logger.Log($"[StateMachine] Switched state to: {CurrentState.StateType}.");
     }
 
     /// <summary>
@@ -67,7 +74,11 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
     /// <returns>True if switch was successful.</returns>
     public bool TrySwitchToPrevious()
     {
-        if (PreviousState == null) return false;
+        if (PreviousState == null)
+        {
+            Logger.Log("[StateMachine] No previous state to switch to.");
+            return false;
+        }
         
         SwitchState(PreviousState.StateType);
         return true;
@@ -81,6 +92,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
         States.Clear();
         CurrentState?.OnExit();
         CurrentState = null;
+        Logger.Log("[StateMachine] Disposed.");
     }
 
     /// <summary>
@@ -90,7 +102,11 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
     private void RegisterState(State<T> state)
     {
         state.StateMachine = this;
-        if(States.TryAdd(state.StateType, state)) return;
+        if (States.TryAdd(state.StateType, state))
+        {
+            Logger.Log($"[StateMachine] State registered: {state.StateType}.");
+            return;
+        }
         throw new ArgumentException($"State {state.StateType} already exists in the state machine");
     }
 }
