@@ -2,6 +2,7 @@ namespace StateMachine;
 
 using Logger;
 
+[Serializable]
 public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
 {
     protected readonly Dictionary<T, State<T>> States;
