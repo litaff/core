@@ -1,5 +1,6 @@
 namespace ViewManagerTests;
 
+using Logger;
 using NUnit.Framework;
 using ViewManager;
 using ViewManager.View;
@@ -81,7 +82,7 @@ public class MockViewManager : ViewManager
     public new List<IView> Views => base.Views;
     public new IView? CurrentView => base.CurrentView;
 
-    public MockViewManager(List<IView> views) : base(views)
+    public MockViewManager(List<IView> views) : base(views, new NativeLogger())
     {
     }
 }
