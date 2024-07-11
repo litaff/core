@@ -7,8 +7,4 @@
         <AssemblyVersion>1.0.1</AssemblyVersion>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Logger\Logger.csproj" />
-    </ItemGroup>
-
 </Project>
