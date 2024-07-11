@@ -13,7 +13,7 @@ public class View : IView
     
     public View()
     {
-        Hide(true);
+        Hide(true).Wait();
     }
 
     #region Display
