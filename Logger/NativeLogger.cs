@@ -1,5 +1,6 @@
 namespace Logger;
 
+[Serializable]
 public class NativeLogger : ILogger
 {
     public void Log(string message)
