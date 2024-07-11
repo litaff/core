@@ -1,5 +1,6 @@
 namespace ViewManager;
 
+using Logger;
 using View;
 
 /// <summary>
@@ -10,8 +11,9 @@ public class ViewManager
 {
     protected readonly List<IView> Views;
     protected IView? CurrentView;
+    protected ILogger Logger;
 
-    public ViewManager(List<IView> views)
+    public ViewManager(List<IView> views, ILogger logger)
     {
         if (views == null || views.Count == 0)
         {
@@ -19,6 +21,7 @@ public class ViewManager
         }
         
         Views = views;
+        Logger = logger;
         CurrentView = null;
     }
     
@@ -38,9 +41,11 @@ public class ViewManager
 
         if (CurrentView != null)
         {
+            Logger.Log($"[ViewManager] Hiding view: {CurrentView.GetType().Name}.");
             await CurrentView.Hide(instant);
         }
         CurrentView = view;
+        Logger.Log($"[ViewManager] Displaying view: {view.GetType().Name}.");
         await CurrentView.Display(instant);
         
         return view;
