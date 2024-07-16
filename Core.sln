@@ -14,6 +14,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewManager", "ViewManager\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewManagerTests", "ViewManagerTests\ViewManagerTests.csproj", "{32AD532E-9B79-43A2-99D7-A3341B367395}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pooling", "Pooling\Pooling.csproj", "{26060705-42D6-4657-8E07-6BA686311EA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoolingTests", "PoolingTests\PoolingTests.csproj", "{EB61077A-42D6-4EA2-AB79-D39BB92E0330}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +52,13 @@ Global
 		{32AD532E-9B79-43A2-99D7-A3341B367395}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32AD532E-9B79-43A2-99D7-A3341B367395}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32AD532E-9B79-43A2-99D7-A3341B367395}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26060705-42D6-4657-8E07-6BA686311EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26060705-42D6-4657-8E07-6BA686311EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26060705-42D6-4657-8E07-6BA686311EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26060705-42D6-4657-8E07-6BA686311EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB61077A-42D6-4EA2-AB79-D39BB92E0330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB61077A-42D6-4EA2-AB79-D39BB92E0330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB61077A-42D6-4EA2-AB79-D39BB92E0330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB61077A-42D6-4EA2-AB79-D39BB92E0330}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
