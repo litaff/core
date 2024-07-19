@@ -11,3 +11,7 @@ The core concept is that a view is a collection of panels. Panels are the indivi
 or exist on their own. Panels outside a view should be reusable and be contained by PanelManager, 
 because they are to be used at any point. Panels inside a view are specific to that view and should not be 
 accessible from PanelManager. Views should only be accessed through ViewManager.
+- `Pooling`: A simple pooling system, which keeps track of active poolables and allows the user to get an available
+poolable, if they exist. If there are no avaiable poolables, a new one is created. The system allows the user to free
+all active poolables or free them individually, if they have a reference to it. The implementation of the poolable 
+interface should invoke the provided event, as the system depends on the Free method and the event to work.
