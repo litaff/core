@@ -5,26 +5,32 @@ using Logger;
 [Serializable]
 public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
 {
-    protected readonly Dictionary<T, State<T>> States;
+    protected readonly Dictionary<T, IState<T>> States;
     protected ILogger Logger { get; private set; }
     
-    public State<T>? CurrentState { get; protected set; }
-    public State<T>? PreviousState { get; protected set; }
+    public IState<T>? CurrentState { get; protected set; }
+    public IState<T>? PreviousState { get; protected set; }
     
     public event Action<T>? OnStateChanged;
 
     /// <summary>
+    /// Creates a new state machine without states. <see cref="RegisterStates"/>
+    /// needs to be called, before the state machine starts working.
+    /// </summary>
+    public StateMachine(ILogger logger)
+    {
+        Logger = logger;
+        States = new Dictionary<T, IState<T>>();
+    }
+    
+    /// <summary>
     /// Creates a new state machine with the given states.
     /// </summary>
-    public StateMachine(ILogger logger, params State<T>[] states)
+    public StateMachine(ILogger logger, params IState<T>[] states)
     {
-        States = new Dictionary<T, State<T>>();
         Logger = logger;
-        
-        foreach (var state in states)
-        {
-            RegisterState(state);
-        }
+        States = new Dictionary<T, IState<T>>();
+        RegisterStates(states);
     }
 
     /// <summary>
@@ -84,6 +90,14 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
         SwitchState(PreviousState.StateType);
         return true;
     }
+
+    public void RegisterStates(params IState<T>[] states)
+    {
+        foreach (var state in states)
+        {
+            RegisterState(state);
+        }
+    }
     
     /// <summary>
     /// Clears the states and calls the OnExit of the current state.
@@ -100,7 +114,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
     /// Registers the state to the state machine.
     /// If the state type already exists in the state machine, an ArgumentException is thrown.
     /// </summary>
-    private void RegisterState(State<T> state)
+    private void RegisterState(IState<T> state)
     {
         state.StateMachine = this;
         if (States.TryAdd(state.StateType, state))
