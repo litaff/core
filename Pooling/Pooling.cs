@@ -32,7 +32,7 @@ public class Pooling<T> where T : IPoolable, new()
     /// Frees a passed poolable.
     /// </summary>
     /// <exception cref="ArgumentException">Throws when passed poolable can't be cast to T.</exception>
-    private void FreePoolable(IPoolable poolable)
+    protected virtual void FreePoolable(IPoolable poolable)
     {
         if (poolable is not T castPoolable)
         {
@@ -48,7 +48,7 @@ public class Pooling<T> where T : IPoolable, new()
     /// Removes first available poolable from <see cref="AvailablePoolables"/> and returns it.
     /// If there is no available poolable, a new object is passed. 
     /// </summary>
-    private T GetAvailableItem()
+    protected virtual T GetAvailableItem()
     {
         if (!AvailablePoolables.Any()) return new T();
         var item = AvailablePoolables.First();
