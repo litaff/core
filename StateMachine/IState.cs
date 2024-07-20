@@ -1,7 +1,6 @@
 namespace StateMachine;
 
-[Serializable]
-public abstract class State<T> : IState<T> where T : Enum
+public interface IState<T> where T : Enum
 {
     /// <summary>
     /// Contains the state machine that this state belongs to.

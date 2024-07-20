@@ -5,7 +5,7 @@ using StateMachine;
 
 public class MockStateMachine : StateMachine<MockStateType>
 {
-    public Dictionary<MockStateType, State<MockStateType>> RegisteredStates => States;
+    public Dictionary<MockStateType, IState<MockStateType>> RegisteredStates => States;
     
     public MockStateMachine(params State<MockStateType>[] states) : base(new NativeLogger(), states)
     {
