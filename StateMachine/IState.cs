@@ -9,15 +9,15 @@ public interface IState<T> where T : Enum
     /// <summary>
     /// Returns the type of this state.
     /// </summary>
-    public abstract T StateType { get; }
-    
+    public T StateType { get; }
+
     /// <summary>
     /// Called when the state is entered.
     /// </summary>
-    public virtual void OnEnter() { }
-    
+    public void OnEnter();
+
     /// <summary>
     /// Called when the state is exited.
     /// </summary>
-    public virtual void OnExit() { }
+    public void OnExit();
 }
