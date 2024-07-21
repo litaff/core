@@ -72,7 +72,6 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : Enum
         CurrentState.OnEnter();
         
         OnStateChanged?.Invoke(stateType);
-        Logger.Log($"[StateMachine] Switched state to: {CurrentState.StateType}.");
     }
 
     /// <summary>
