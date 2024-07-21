@@ -1,12 +1,16 @@
 namespace StateMachine;
 
+/// <summary>
+/// Base implementation of a state. Should never be accessed directly, only inside a state machine.
+/// </summary>
+/// <typeparam name="T"></typeparam>
 [Serializable]
 public abstract class State<T> : IState<T> where T : Enum
 {
     /// <summary>
     /// Contains the state machine that this state belongs to.
     /// </summary>
-    public IStateMachine<T>? StateMachine { get; set; } 
+    public IStateMachine<T> StateMachine { get; set; } = null!;
     /// <summary>
     /// Returns the type of this state.
     /// </summary>

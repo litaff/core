@@ -5,7 +5,7 @@ public interface IState<T> where T : Enum
     /// <summary>
     /// Contains the state machine that this state belongs to.
     /// </summary>
-    public IStateMachine<T>? StateMachine { get; set; } 
+    public IStateMachine<T> StateMachine { get; set; } 
     /// <summary>
     /// Returns the type of this state.
     /// </summary>
