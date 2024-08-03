@@ -10,11 +10,6 @@ public class View : IView
     public bool IsHidden { get; private set; }
     public bool IsBeingDisplayed { get; private set; }
     public bool IsBeingHidden { get; private set; }
-    
-    public View()
-    {
-        Hide(true).Wait();
-    }
 
     #region Display
     
