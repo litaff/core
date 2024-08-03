@@ -17,6 +17,13 @@ public class ViewTests
     [Test]
     public async Task Display_InitiallyHidden_MakesViewDisplayed()
     {
+        await view.Hide();
+        Assert.Multiple(() =>
+        {
+            Assert.That(view.IsDisplayed, Is.False);
+            Assert.That(view.IsHidden, Is.True);
+            Assert.That(view.IsBeingHidden, Is.False);
+        });
         await view.Display();
         Assert.Multiple(() =>
         {
@@ -30,23 +37,17 @@ public class ViewTests
     public async Task Hide_InitiallyDisplayed_MakesViewHidden()
     {
         await view.Display();
+        Assert.Multiple(() =>
+        {
+            Assert.That(view.IsDisplayed, Is.True);
+            Assert.That(view.IsHidden, Is.False);
+            Assert.That(view.IsBeingDisplayed, Is.False);
+        });
         await view.Hide();
         Assert.Multiple(() =>
         {
             Assert.That(view.IsDisplayed, Is.False);
             Assert.That(view.IsHidden, Is.True);
-            Assert.That(view.IsBeingHidden, Is.False);
-        });
-    }
-    
-    [Test]
-    public void Constructor_HidesView()
-    {
-        Assert.Multiple(() =>
-        {
-            Assert.That(view.IsDisplayed, Is.False);
-            Assert.That(view.IsHidden, Is.True);
-            Assert.That(view.IsBeingDisplayed, Is.False);
             Assert.That(view.IsBeingHidden, Is.False);
         });
     }
