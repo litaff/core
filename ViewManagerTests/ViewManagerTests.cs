@@ -1,6 +1,6 @@
 namespace ViewManagerTests;
 
-using Logger;
+using Moq;
 using NUnit.Framework;
 using ViewManager;
 using ViewManager.View;
@@ -8,81 +8,59 @@ using ViewManager.View;
 [TestFixture]
 public class ViewManagerTests
 {
-    private MockViewManager viewManager;
+    private ViewManager viewManager;
     private List<IView> views;
     
     [SetUp]
     public void SetUp()
     {
-        views = new List<IView>
-        {
-            new FirstMockView(),
-            new SecondMockView(),
-        };
+        views =
+        [
+            new Mock<IView>().Object,
+            new Mock<IView>().Object
+        ];
+        viewManager = new ViewManager(views);
+    }
+
+    [Test]
+    public void GetView_ThrowsArgumentException_WhenNoViewOfTypeFound()
+    {
+        Assert.Throws<ArgumentException>(() => viewManager.GetView<UnknownView>());
+    }
+    
+    [Test]
+    public void GetView_ThrowsArgumentException_WhenMultipleViewsOfTypeFound()
+    {
+        Assert.Throws<ArgumentException>(() => viewManager.GetView<IView>());
+    }
+    
+    [Test]
+    public void GetView_ReturnsUniqueView()
+    {
+        var mockView = new Mock<IView>();
+        viewManager = new ViewManager([mockView.Object]);
         
-        viewManager = new MockViewManager(views);
+        var view = viewManager.GetView<IView>();
+        
+        Assert.That(view, Is.EqualTo(mockView.Object));
     }
     
-    [Test]
-    public void Constructor_WithValidViews_SetsViewsProperty()
+    public class UnknownView : IView
     {
-        Assert.That(viewManager.Views, Has.Count.EqualTo(2));
-    }
-    
-    [Test]
-    public async Task GetView_WithType_ReturnsCorrectView()
-    {
-        var view = await viewManager.GetView<SecondMockView>();
-        Assert.That(view, Is.TypeOf<SecondMockView>());
-    }
+        public bool IsDisplayed { get; }
+        public bool IsHidden { get; }
+        public bool IsBeingDisplayed { get; }
+        public bool IsBeingHidden { get; }
+        public event Action<IView>? OnDisplay;
+        public event Action<IView>? OnHide;
+        public Task Display(bool instant = false)
+        {
+            throw new NotImplementedException();
+        }
 
-    [Test]
-    public async Task GetView_WithType_SetsCurrentView()
-    {
-        await viewManager.GetView<SecondMockView>();
-        Assert.That(viewManager.CurrentView, Is.Not.Null);
-    }
-    
-    [Test]
-    public void Constructor_WithNullViews_ThrowsArgumentException()
-    {
-        Assert.Throws<ArgumentException>(() => viewManager = new MockViewManager(null!));
-    }
-    
-    [Test]
-    public void Constructor_WithEmptyViews_ThrowsArgumentException()
-    {
-        Assert.Throws<ArgumentException>(() => viewManager = new MockViewManager(new List<IView>()));
-    }
-    
-    [Test]
-    public void GetView_WithUnregisteredView_ThrowsArgumentException()
-    {
-        Assert.ThrowsAsync<ArgumentException>(() => viewManager.GetView<UnregisteredView>());
-    }
-}
-
-public class FirstMockView : global::ViewManager.View.View
-{
-    
-}
-
-public class SecondMockView : global::ViewManager.View.View
-{
-    
-}
-
-public class UnregisteredView : global::ViewManager.View.View
-{
-    
-}
-
-public class MockViewManager : ViewManager
-{
-    public new List<IView> Views => base.Views;
-    public new IView? CurrentView => base.CurrentView;
-
-    public MockViewManager(List<IView> views) : base(views, new ConsoleLogger())
-    {
-    }
+        public Task Hide(bool instant = false)
+        {
+            throw new NotImplementedException();
+        }
+    } 
 }
