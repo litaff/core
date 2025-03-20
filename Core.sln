@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pooling", "Pooling\Pooling.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoolingTests", "PoolingTests\PoolingTests.csproj", "{EB61077A-42D6-4EA2-AB79-D39BB92E0330}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions", "Extensions\Extensions.csproj", "{21851F19-9586-489A-8164-9E975672EFFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtensionsTests", "ExtensionsTests\ExtensionsTests.csproj", "{41F2C310-C688-413C-A6DB-22CB2F3C16E6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +58,13 @@ Global
 		{EB61077A-42D6-4EA2-AB79-D39BB92E0330}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB61077A-42D6-4EA2-AB79-D39BB92E0330}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB61077A-42D6-4EA2-AB79-D39BB92E0330}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21851F19-9586-489A-8164-9E975672EFFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21851F19-9586-489A-8164-9E975672EFFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21851F19-9586-489A-8164-9E975672EFFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21851F19-9586-489A-8164-9E975672EFFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41F2C310-C688-413C-A6DB-22CB2F3C16E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41F2C310-C688-413C-A6DB-22CB2F3C16E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41F2C310-C688-413C-A6DB-22CB2F3C16E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41F2C310-C688-413C-A6DB-22CB2F3C16E6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
